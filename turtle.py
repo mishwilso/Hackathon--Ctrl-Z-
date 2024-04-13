@@ -45,9 +45,9 @@ class Turtle(ac.Sprite):
                 self.target_x -= 80 * command[1] - 40
         elif command[0] == "move_right":
             if isinstance(command[1], str):
-                self.center_x += 80 * self.speed - 40
+                self.target_x += 80 * self.speed - 40
             else:
-                self.center_x += 80 * command[1] - 40
+                self.target_x += 80 * command[1] - 40
         elif command[0] == "move_up":
             if isinstance(command[1], str):
                 self.target_y += 80 * self.speed - 40
@@ -158,8 +158,11 @@ class TurtleScreen(arcade.Section):
         self.on_draw()
 
         # Check if the player touches the flag
+
+    def worm_win(self):
         if arcade.check_for_collision(self.player_sprite, self.flag_sprite):
-            print("win!")
+            return True
+        return False
 
     def on_draw(self):
         # Draw the sprite

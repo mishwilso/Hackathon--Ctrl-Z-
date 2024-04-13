@@ -7,6 +7,8 @@ import turtle
 
 import turtle as t
 
+import main
+
 import arcade.gui.widgets
 from arcade.experimental.uistyle import UIFlatButtonStyle
 
@@ -125,6 +127,20 @@ class Console(arcade.View):
 
         self.selected: bool = False  # if this section is selected
 
+        self.exit_png = arcade.load_texture("letter_x.png")
+
+        exit_button = arcade.gui.UITextureButton(x=20,
+                                                     y=self.top - 60,
+                                                     width=60,
+                                                     height=60,
+                                                     texture=self.exit_png)
+
+        @exit_button.event("on_click")
+        def on_click_switch_button(event):
+            view = main.MenuView()
+
+            self.window.show_view(view)
+
         @button_1.event("on_click")
         def on_click_switch_button(event):
             self.add_user_input(self.button_values[0])
@@ -172,17 +188,18 @@ class Console(arcade.View):
             self.user_input_complete[self.current_index] = self.user_input
             if self.current_index < self.max_lines - 1:
                 self.current_index += 1
-
             if self.current_index == self.max_lines - 1:
                 moves = game.check_solution(self.user_input_complete)
-                if moves:
-                    win = self.turtle.player_sprite.move(moves)
+                self.turtle.player_sprite.move(moves)
+                if self.turtle.worm_win:
+                    pass
                 else:
                     self.reset_code()
             else:
                 self.user_input = []
 
         self.manager.add(grid)
+        self.manager.add(exit_button)
 
     def on_draw(self):
         """ Draw this section """

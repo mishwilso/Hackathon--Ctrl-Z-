@@ -42,6 +42,8 @@ class Game():
                     if len(line) >= 2:
                         if isinstance(line[1], int):
                             moves.append([line[0], line[1]])
+                        elif line[1] == "speed":
+                            moves.append([line[0], line[1]])
                         else:
                             return None
 
