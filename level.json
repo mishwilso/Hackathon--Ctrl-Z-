@@ -1,8 +1,8 @@
 {
     "1": {
         "lines": "1",
-        "start_square": [2,0],
-        "end_square": [2,5],
+        "start_pos": [2,0],
+        "end_pos": [2,5],
         "pre_code": ["speed = 3"],
         "parsed_pre_code": ["speed","3"],
         "post_code": ["move_up(speed)"],
@@ -11,8 +11,8 @@
     },
     "2": {
         "lines": "1",
-        "start_square": [0,2],
-        "end_square": [2,3],
+        "start_pos": [0,2],
+        "end_pos": [2,3],
         "pre_code": ["speed = 3"],
         "parsed_pre_code": ["speed","3"],
         "post_code": ["move_up(speed)"],

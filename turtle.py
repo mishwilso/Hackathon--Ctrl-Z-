@@ -78,8 +78,6 @@ class Turtle(ac.Sprite):
         self.center_y += dy
 
 
-
-
 class TurtleScreen(arcade.Section):
     """
     Show the Turtle
@@ -97,23 +95,17 @@ class TurtleScreen(arcade.Section):
         self.index_p = 0
         self.index_f = 0
 
-        # Make the player sprite and lists
-
         # Make the flag sprite
         self.flag_sprite = None
 
         # Initialize variables
         self.player_list = arcade.SpriteList()
 
-        # Set the sprites for player and flag
-        self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE, PLAYER_START_X, PLAYER_START_Y)
+        # Set the sprites for player/flag and their positions
+        self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE, start_pos[0]*80+40, start_pos[1]*80+80)
         self.player_list.append(self.player_sprite)
 
-        self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE, FLAG_START_X, FLAG_START_Y)
-
-        # Position the sprites
-        self.flag_sprite.center_x = FLAG_START_X
-        self.flag_sprite.center_y = FLAG_START_Y
+        self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE, end_pos[0]*80+40, end_pos[1]*80+80)
 
     def update_animation(self, delta_time: float = 1 / 60):
         # Idle animation

@@ -166,6 +166,5 @@ class WinView(ac.View):
                                        height=110,
                                        text=display)
 
-
 if __name__ == '__main__':
     main()
