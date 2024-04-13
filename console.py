@@ -2,6 +2,8 @@ import arcade
 
 import arcade.gui
 
+import game as g
+
 import arcade.gui.widgets
 from arcade.experimental.uistyle import UIFlatButtonStyle
 
@@ -47,7 +49,8 @@ class Console(arcade.View):
     This represents a part of the View defined by its
     boundaries (left, bottom, etc.)
     """
-    def __init__(self, left: int, bottom: int, width: int, height: int,
+
+    def __init__(self, left: int, bottom: int, width: int, height: int, game: g.Game,
                  **kwargs):
         super().__init__()
         self.left = left
@@ -56,17 +59,25 @@ class Console(arcade.View):
         self.bottom = bottom
         self.width = width
         self.height = height
+        self.code = "HI!!!"
+        self.game = game
+
+        self.start_code = game.get_level_data().pre_code
+        self.end_code = game.get_level_data().post_code
+        self.button_values = game.get_level_data().buttons
+
+        self.user_input = []
 
         self.manager = arcade.gui.UIManager()
 
-        button_1 = self.create_button("speed")
-        button_2 = self.create_button("+")
-        button_3 = self.create_button("-")
-        button_4 = self.create_button("*")
-        button_5 = self.create_button("=")
-        button_6 = self.create_button("==")
-        button_7 = self.create_button("-")
-        button_8 = self.create_button("#")
+        button_1 = self.create_button(self.button_values[0])
+        button_2 = self.create_button(self.button_values[1])
+        button_3 = self.create_button(self.button_values[2])
+        button_4 = self.create_button(self.button_values[3])
+        button_5 = self.create_button(self.button_values[4])
+        button_6 = self.create_button(self.button_values[5])
+        button_7 = self.create_button(self.button_values[6])
+        button_8 = self.create_button(self.button_values[7])
 
         clear_button = arcade.gui.UIFlatButton(x=left,
                                                y=bottom,
@@ -79,13 +90,6 @@ class Console(arcade.View):
                                              height=60,
                                              text="Run",
                                              style=default_style)
-
-        quit_button = arcade.gui.UIFlatButton(x=100,
-                                              y=160,
-                                              width=200,
-                                              height=60,
-                                              text="Quit",
-                                              style=default_style)
 
         grid = arcade.gui.UIGridLayout(x=left, y=bottom, column_count=4, row_count=3, horizontal_spacing=5,
                                        vertical_spacing=10)
@@ -104,56 +108,68 @@ class Console(arcade.View):
 
         @button_1.event("on_click")
         def on_click_switch_button(event):
-            print("button_1")
+            self.add_user_input(self.button_values[0])
 
         @button_2.event("on_click")
         def on_click_switch_button(event):
-            print("button_2")
+            self.add_user_input(self.button_values[1])
 
         @button_3.event("on_click")
         def on_click_switch_button(event):
-            print("button_3")
+            self.add_user_input(self.button_values[2])
 
         @button_4.event("on_click")
         def on_click_switch_button(event):
-            print("button_4")
+            self.add_user_input(self.button_values[3])
 
         @button_5.event("on_click")
         def on_click_switch_button(event):
-            print("button_5")
+            self.add_user_input(self.button_values[4])
 
         @button_6.event("on_click")
         def on_click_switch_button(event):
-            print("button_6")
+            self.add_user_input(self.button_values[5])
 
         @button_7.event("on_click")
         def on_click_switch_button(event):
-            print("button_7")
+            self.add_user_input(self.button_values[6])
 
         @button_8.event("on_click")
         def on_click_switch_button(event):
-            print("button_8")
+            self.add_user_input(self.button_values[7])
 
         @clear_button.event("on_click")
         def on_click_switch_button(event):
-            print("CLEAR!!")
+            self.user_input = []
 
-        @quit_button.event("on_click")
+        @run_button.event("on_click")
         def on_click_switch_button(event):
-            print("HELLO!!")
+            print("RUN THIS!!")
 
         self.manager.add(grid)
-        self.manager.add(quit_button)
-
 
     def on_draw(self):
         """ Draw this section """
         # arcade.start_render()
+        self.clear(arcade.color.BEAU_BLUE)
+
+
 
         arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 2,
                                           self.bottom, arcade.color.APPLE_GREEN)
         arcade.draw_text(f'You\'re are on the Right', self.left + 30,
                          self.top - 50, arcade.color.BLACK, 16)
+
+        user_code = ""
+        for word in self.user_input:
+            user_code += word + " "
+
+        arcade.draw_text(f'{user_code}', self.left + 30,
+                         self.top - 50, arcade.color.WHITE, 16)
+
+        # draw a line separating each Section
+        arcade.draw_line(self.window.width / 2, 0, self.window.width / 2,
+                         self.window.height, arcade.color.BLACK, 1)
 
         self.manager.draw()
 
@@ -170,3 +186,7 @@ class Console(arcade.View):
     def on_hide_view(self):
         # Disable the UIManager when the view is hidden.
         self.manager.disable()
+
+    def add_user_input(self, user_Input):
+        if len(self.user_input) < 8:
+            self.user_input.append(user_Input)
