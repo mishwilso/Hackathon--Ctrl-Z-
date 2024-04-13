@@ -17,6 +17,8 @@ python -m arcade.examples.sections_demo_1
 """
 from typing import Optional
 
+import console as c
+
 import arcade
 
 
@@ -121,7 +123,7 @@ class GameView(arcade.View):
                                     self.window.height, name='Left'))
 
         # 2) Second section holds the other half of the screen
-        self.add_section(ScreenPart(self.window.width / 2, 0,
+        self.add_section(c.Console(self.window.width / 2, 0,
                                     self.window.width / 2, self.window.height,
                                     name='Right'))
 
