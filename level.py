@@ -14,6 +14,7 @@ class Level():
 
         lvl_data = all_lvl.get(str(lvl_num))
 
+        self.lines = lvl_data.get("lines")
         self.start_pos = lvl_data.get("start_pos")
         self.end_pos = lvl_data.get("end_pos")
         self.pre_code = lvl_data.get("pre_code")

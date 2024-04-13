@@ -1,5 +1,6 @@
 {
     "1": {
+        "lines": 1,
         "start_square": [2,0],
         "end_square": [2,5],
         "pre_code": ["speed = 3"],
@@ -9,12 +10,13 @@
         "buttons": ["speed","move_down","=","7","5","3","2","1"]
     },
     "2": {
+        "lines": 1,
         "start_square": [0,2],
-        "end_square": [6,3],
+        "end_square": [2,3],
         "pre_code": ["speed = 3"],
         "parsed_pre_code": ["speed",3],
         "post_code": ["move_up(speed)"],
-        "parsed_post_code": ["move_up","speed"],
+        "parsed_post_code": ["move_up",1],
         "buttons": ["speed","move_right","move_down","move_right","=","6","2","1"]
     }
 }
