@@ -12,9 +12,6 @@ def main():
     # show the view
     window.show_view(view)
 
-    new_lvl = lvl.Level(1)
-    print(new_lvl.get_start_pos)
-
     # run arcade loop
     window.run()
 
