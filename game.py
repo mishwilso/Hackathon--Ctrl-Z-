@@ -42,7 +42,7 @@ class Game():
             else:
                 return None
 
-        if code[0].contains("speed"):
+        if code[0][0] == "s":
             if code[1] == "=":
                 if isinstance(code[2],(int)):
                     moves.append(code)
