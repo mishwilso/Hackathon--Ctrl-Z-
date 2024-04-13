@@ -11,36 +11,27 @@ PLAYER_START_Y = 100
 FLAG_START_X = 225
 FLAG_START_Y = 500
 
+# Speed of the animation
+FRAME_RATE = 30
+
 
 class Turtle(ac.Sprite):
     """
     Move all directions by 80 pixels (move speed)
     and make sure the character doesn't leave the screen
     """
-    def move_left(self):
-        # Move the player by the move speed
-        self.center_x -= MOVEMENT_SPEED
-
-        # Check if out of bounds
-        self.check_out_of_bounds()
-
-    def move_right(self):
-        # Move the player by the move speed
-        self.center_x += MOVEMENT_SPEED
-
-        # Check if out of bounds
-        self.check_out_of_bounds()
-
-    def move_up(self):
-        # Move the player by the move speed
-        self.center_y += MOVEMENT_SPEED
-
-        # Check if out of bounds
-        self.check_out_of_bounds()
-
-    def move_down(self):
-        # Move the player by the move speed
-        self.center_y -= MOVEMENT_SPEED
+    def move(self, command_list):
+        # Determine the direction the player is moving
+        # Then move by the move speed
+        for command in command_list:
+            if command[0] == "move_left":
+                self.center_x -= MOVEMENT_SPEED * command[1]
+            elif command[0] == "move_right":
+                self.center_x += MOVEMENT_SPEED * command[1]
+            elif command[0] == "move_up":
+                self.center_y += MOVEMENT_SPEED * command[1]
+            elif command[0] == "move_down":
+                self.center_y -= MOVEMENT_SPEED * command[1]
 
         # Check if out of bounds
         self.check_out_of_bounds()
@@ -71,7 +62,9 @@ class TurtleScreen(arcade.Section):
         self.bottom = bottom
         self.top = top
 
-        # self.index = 0
+        # Define indexes for animation
+        self.index_p = 0
+        self.index_f = 0
 
         # Make the player sprite and lists
         self.player_list = None
@@ -83,15 +76,11 @@ class TurtleScreen(arcade.Section):
         # Initialize variables
         self.player_list = arcade.SpriteList()
 
-        # Assign the sprites
+        # Set the sprites for player and flag
         self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE)
         self.player_list.append(self.player_sprite)
 
         self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE)
-
-        # TODO: Try and animate? :)
-        # self.player_sprite = Turtle(":resources:images/enemies/wormGreen_move.png", SPRITE_SCALE)
-        # self.player_list.append(self.player_sprite)
 
         # Position the sprites
         self.player_sprite.center_x = PLAYER_START_X
@@ -100,27 +89,44 @@ class TurtleScreen(arcade.Section):
         self.flag_sprite.center_x = FLAG_START_X
         self.flag_sprite.center_y = FLAG_START_Y
 
-    # Doesn't work currently and isn't needed if we run out of time
-    def update_animation(self, index, delta_time: float = 1 / 60):
+    def update_animation(self, delta_time: float = 1 / 60):
         # Idle animation
-        self.index += 1
+        self.index_p += 1
 
         # If it's at the first frame, switch to the second
-        if self.player_sprite == self.player_list[0] and index == 120:
-            self.player_sprite = self.player_list[1]
-            self.index -= 120
+        if self.index_p == FRAME_RATE:
+            self.player_sprite.append_texture(arcade.load_texture(":resources:images/enemies/wormGreen_move.png"))
+            self.player_sprite.set_texture(1)
             return
 
         # If it's at the second frame, switch to the first
-        if self.player_sprite == self.player_list[1] and index == 120:
-            self.player_sprite = self.player_list[0]
-            self.index -= 120
+        if self.index_p == FRAME_RATE * 2:
+            self.player_sprite.set_texture(0)
+            self.index_p -= FRAME_RATE * 2
+            return
+
+    def update_flag_animation(self, delta_time: float = 1 / 60):
+        # Idle animation
+        self.index_f += 1
+
+        # If it's at the first frame, switch to the second
+        if self.index_f == FRAME_RATE / 2:
+            self.flag_sprite.append_texture(arcade.load_texture(":resources:images/items/flagGreen1.png"))
+            self.flag_sprite.set_texture(1)
+            return
+
+        # If it's at the second frame, switch to the third
+        if self.index_f == FRAME_RATE:
+            self.flag_sprite.set_texture(0)
+            self.index_f -= FRAME_RATE
             return
 
     def on_update(self, delta_time: float):
         # Movement and game logic
         self.player_list.update()
-        # self.update_animation(self.index)
+
+        self.update_animation()
+        self.update_flag_animation()
         self.on_draw()
 
     def on_draw(self):
