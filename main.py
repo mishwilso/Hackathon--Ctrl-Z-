@@ -59,7 +59,7 @@ class MenuView(ac.View):
         # Create theme object and set theme
 
     def on_show(self):
-        arcade.set_background_color(arcade.color.DARK_BLUE)
+        arcade.set_background_color(arcade.color.APPLE_GREEN)
 
     def on_draw(self):
         self.clear()
@@ -116,7 +116,7 @@ class LevelView(ac.View):
         # Create theme object and set theme
 
     def on_show(self):
-        arcade.set_background_color(arcade.color.GREEN_YELLOW)
+        arcade.set_background_color(arcade.color.APPLE_GREEN)
 
     def on_draw(self):
         self.clear()
