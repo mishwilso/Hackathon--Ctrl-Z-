@@ -18,12 +18,9 @@ class Game():
             self.lives -= 1
             return False
 
-    def get_buttons(self):
-        return self.level_data.buttons
-
     def set_level(self, new_level):
         self.level_num = new_level
 
-    def get_level(self):
-        return self.level_num
+    def get_level_data(self):
+        return self.level_data
 
