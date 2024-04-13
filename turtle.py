@@ -2,7 +2,7 @@ import arcade
 import arcade as ac
 
 # Constants
-MOVEMENT_SPEED = 55
+MOVEMENT_SPEED = 5
 SPRITE_SCALE = 0.75
 
 PLAYER_START_X = 200
@@ -39,16 +39,25 @@ class Turtle(ac.Sprite):
 
     def move_sqaure(self, command):
         if command[0] == "move_left":
-            self.center_x -= MOVEMENT_SPEED * command[1]
+            if isinstance(command[1], str):
+                self.target_x -= 80 * self.speed - 40
+            else:
+                self.target_x -= 80 * command[1] - 40
         elif command[0] == "move_right":
-            self.center_x += MOVEMENT_SPEED * command[1]
+            if isinstance(command[1], str):
+                self.center_x += 80 * self.speed - 40
+            else:
+                self.center_x += 80 * command[1] - 40
         elif command[0] == "move_up":
             if isinstance(command[1], str):
-                self.target_y += MOVEMENT_SPEED * self.speed
+                self.target_y += 80 * self.speed - 40
             else:
-                self.target_y += MOVEMENT_SPEED * command[1]
+                self.target_y += 80 * command[1] - 80
         elif command[0] == "move_down":
-            self.center_y -= MOVEMENT_SPEED * command[1]
+            if isinstance(command[1], str):
+                self.target_y -= 80 * self.speed
+            else:
+                self.target_y -= 80 * command[1] - 80
         elif command[0] == "speed":
             self.speed = int(command[1])
 
@@ -68,6 +77,7 @@ class Turtle(ac.Sprite):
         # Move the dot towards the target position
         dx = self.target_x - self.center_x
         dy = self.target_y - self.center_y
+
         distance = ((dx ** 2) + (dy ** 2)) ** 0.5
         if distance > MOVEMENT_SPEED:
             scale = MOVEMENT_SPEED / distance
