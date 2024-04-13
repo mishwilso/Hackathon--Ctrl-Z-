@@ -6,6 +6,6 @@
         "parsed_pre_code": ["speed",3],
         "post_code": ["move_up(speed)"],
         "parsed_post_code": ["up","speed"],
-        "buttons": ["speed","+","8","-","=","move_down()","2","1"]
+        "buttons": ["speed","+","8","-","=","move_down","2","1"]
     }
 }
