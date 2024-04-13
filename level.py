@@ -17,6 +17,8 @@ class Level():
         self.start_pos = lvl_data.get("start_pos")
         self.end_pos = lvl_data.get("end_pos")
         self.pre_code = lvl_data.get("pre_code")
+        self.parsed_pre_code = lvl_data.get("parsed_pre_code")
         self.post_code = lvl_data.get("post_code")
+        self.parsed_post_code = lvl_data.get("parsed_post_code")
         self.buttons = lvl_data.get("buttons")
         self.solve = lvl_data.get("solve")
