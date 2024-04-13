@@ -153,7 +153,7 @@ class Console(arcade.View):
 
         @run_button.event("on_click")
         def on_click_switch_button(event):
-            moves = game.check_solution(self.user_input)
+            moves = game.check_solution([self.user_input])
             if moves:
                 self.turtle.player_sprite.move(moves)
 

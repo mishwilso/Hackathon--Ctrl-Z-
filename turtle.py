@@ -32,7 +32,7 @@ class Turtle(ac.Sprite):
         self.speed = 0
 
         for command in command_list:
-            self.move(command)
+            self.move_sqaure(command)
 
         # Check if out of bounds
         self.check_out_of_bounds()
@@ -43,7 +43,6 @@ class Turtle(ac.Sprite):
         elif command[0] == "move_right":
             self.center_x += MOVEMENT_SPEED * command[1]
         elif command[0] == "move_up":
-
             if isinstance(command[1], str):
                 self.target_y += MOVEMENT_SPEED * self.speed
             else:
@@ -51,7 +50,7 @@ class Turtle(ac.Sprite):
         elif command[0] == "move_down":
             self.center_y -= MOVEMENT_SPEED * command[1]
         elif command[0] == "speed":
-            speed = int(command[1])
+            self.speed = int(command[1])
 
     # Check if the player is out of bounds
     def check_out_of_bounds(self):
@@ -150,7 +149,7 @@ class TurtleScreen(arcade.Section):
 
     def on_update(self, delta_time: float):
         # Movement and game logic
-        arcade.schedule(self.player_list.update(), 1/80)
+        self.player_list.update()
 
         self.update_animation()
         self.update_flag_animation()
