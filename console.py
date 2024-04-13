@@ -11,7 +11,7 @@ from arcade.experimental.uistyle import UIFlatButtonStyle
 default_style = {
     "normal": UIFlatButtonStyle(
         font_size=12,
-        font_name=("calibri", "arial"),
+        font_name="Kenney Mini Square",
         font_color=arcade.color.BRUNSWICK_GREEN,
         bg=arcade.color.WHITE,
         border=None,
@@ -19,7 +19,7 @@ default_style = {
     ),
     "hover": UIFlatButtonStyle(
         font_size=12,
-        font_name=("calibri", "arial"),
+        font_name="Kenney Mini Square",
         font_color=arcade.color.WHITE,
         bg=arcade.color.BRUNSWICK_GREEN,
         border=None,
@@ -27,7 +27,7 @@ default_style = {
     ),
     "press": UIFlatButtonStyle(
         font_size=12,
-        font_name=("calibri", "arial"),
+        font_name="Kenney Mini Square",
         font_color=arcade.color.WHITE,
         bg=arcade.color.BRUNSWICK_GREEN,
         border=arcade.color.ARMY_GREEN,
@@ -35,7 +35,7 @@ default_style = {
     ),
     "disabled": UIFlatButtonStyle(
         font_size=12,
-        font_name=("calibri", "arial"),
+        font_name="Kenney Mini Square",
         font_color=arcade.color.WHITE,
         bg=arcade.color.COOL_GREY,
         border=arcade.color.ASH_GREY,
@@ -152,7 +152,8 @@ class Console(arcade.View):
     def on_draw(self):
         """ Draw this section """
         # arcade.start_render()
-        self.clear(arcade.color.BEAU_BLUE)
+        # self.clear(arcade.color.BEAU_BLUE)
+        self.clear(arcade.color.WHITE)
 
         arcade.draw_lrtb_rectangle_filled(self.left, self.left + 30, self.top,
                                           self.bottom, arcade.color.LIGHT_GRAY)
@@ -160,8 +161,12 @@ class Console(arcade.View):
         arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 3,
                                           self.bottom, arcade.color.APPLE_GREEN)
 
-
         lines_offset = self.top * (2/3) // 22 + 10
+
+        for i in range(14):
+            arcade.draw_text(f'{i + 1}', self.left + 10,
+                             self.top - 30 - (i * lines_offset), arcade.color.BLACK, 12,
+                             font_name="Kenney Pixel")
 
         user_code = ""
         for word in self.user_input:
@@ -174,8 +179,9 @@ class Console(arcade.View):
         self.combined_code += self.end_code
 
         for line in range(len(self.combined_code)):
-            arcade.draw_text(f'{self.combined_code[line]}', self.left + 10 ,
-                             self.top - 30 - (line * lines_offset), arcade.color.BLACK, 16)
+            arcade.draw_text(f'{self.combined_code[line]}', self.left + 35,
+                             self.top - 30 - (line * lines_offset) - 4, arcade.color.BLACK, 14,
+                             font_name="Kenney Mini Square")
 
         #arcade.draw_text(f'{user_code}', self.left + 30,
                          #self.top - 50, arcade.color.WHITE, 16)
@@ -187,7 +193,7 @@ class Console(arcade.View):
         self.manager.draw()
 
     def create_button(self, display):
-        return arcade.gui.UIFlatButton(width=95,
+        return arcade.gui.UIFlatButton(width=97,
                                        height=60,
                                        text=display,
                                        style=default_style)
