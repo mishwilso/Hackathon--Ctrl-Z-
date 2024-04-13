@@ -136,20 +136,3 @@ class GameView(arcade.View):
         arcade.draw_line(self.window.width / 2, 0, self.window.width / 2,
                          self.window.height, arcade.color.BLACK, 1)
 
-
-def main():
-    # create the window
-    window = arcade.Window(800, 640)
-
-    # create the custom View. Sections are initialized inside the GameView init
-    view = GameView()
-
-    # show the view
-    window.show_view(view)
-
-    # run arcade loop
-    window.run()
-
-
-if __name__ == '__main__':
-    main()
