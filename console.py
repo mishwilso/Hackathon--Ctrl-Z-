@@ -42,7 +42,6 @@ default_style = {
 }
 
 
-
 class Console(arcade.Section):
     """
     This represents a part of the View defined by its
@@ -63,7 +62,9 @@ class Console(arcade.Section):
         button_7 = self.create_button("-")
         button_8 = self.create_button("#")
 
-        clear_button = arcade.gui.UIFlatButton(width=195,
+        clear_button = arcade.gui.UIFlatButton(x=left,
+                                               y=bottom,
+                                               width=195,
                                                height=60,
                                                text="Clear",
                                                style=default_style)
@@ -72,6 +73,13 @@ class Console(arcade.Section):
                                              height=60,
                                              text="Run",
                                              style=default_style)
+
+        quit_button = arcade.gui.UIFlatButton(x=100,
+                                              y=160,
+                                              width=200,
+                                              height=60,
+                                              text="Quit",
+                                              style=default_style)
 
         grid = arcade.gui.UIGridLayout(x=left, y=bottom, column_count=4, row_count=3, horizontal_spacing=5,
                                        vertical_spacing=10)
@@ -85,8 +93,6 @@ class Console(arcade.Section):
         grid.add(button_8, col_num=3, row_num=1)
         grid.add(clear_button, col_num=0, row_num=2, col_span=2)
         grid.add(run_button, col_num=2, row_num=2, col_span=2)
-
-        self.manager.add(grid)
 
         self.selected: bool = False  # if this section is selected
 
@@ -126,6 +132,14 @@ class Console(arcade.Section):
         def on_click_switch_button(event):
             print("CLEAR!!")
 
+        @quit_button.event("on_click")
+        def on_click_switch_button(event):
+            print("HELLO!!")
+
+        self.manager.add(grid)
+        self.manager.add(quit_button)
+
+
     def on_draw(self):
         """ Draw this section """
         # arcade.start_render()
@@ -150,5 +164,3 @@ class Console(arcade.Section):
     def on_hide_view(self):
         # Disable the UIManager when the view is hidden.
         self.manager.disable()
-
-
