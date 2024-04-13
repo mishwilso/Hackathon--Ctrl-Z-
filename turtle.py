@@ -2,7 +2,7 @@ import arcade
 import arcade as ac
 
 # Constants
-MOVEMENT_SPEED = 80
+MOVEMENT_SPEED = 55
 SPRITE_SCALE = 0.75
 
 PLAYER_START_X = 200
@@ -20,29 +20,38 @@ class Turtle(ac.Sprite):
     Move all directions by 80 pixels (move speed)
     and make sure the character doesn't leave the screen
     """
+    def __init__(self, texture, spirtescale, x, y):
+        super().__init__(texture, spirtescale, center_x=x, center_y=y)
+        self.target_y = self.center_y
+        self.target_x = self.center_x
+        self.speed = 0
+
     def move(self, command_list):
         # Determine the direction the player is moving
         # Then move by the move speed
-        speed = 0
+        self.speed = 0
 
         for command in command_list:
-            print(command)
-            if command[0] == "move_left":
-                self.center_x -= MOVEMENT_SPEED * command[1]
-            elif command[0] == "move_right":
-                self.center_x += MOVEMENT_SPEED * command[1]
-            elif command[0] == "move_up":
-                if isinstance(command[1], str):
-                    self.center_y += MOVEMENT_SPEED * speed
-                else:
-                    self.center_y += MOVEMENT_SPEED * command[1]
-            elif command[0] == "move_down":
-                self.center_y -= MOVEMENT_SPEED * command[1]
-            elif command[0] == "speed":
-                speed = int(command[1])
+            self.move(command)
 
         # Check if out of bounds
         self.check_out_of_bounds()
+
+    def move_sqaure(self, command):
+        if command[0] == "move_left":
+            self.center_x -= MOVEMENT_SPEED * command[1]
+        elif command[0] == "move_right":
+            self.center_x += MOVEMENT_SPEED * command[1]
+        elif command[0] == "move_up":
+
+            if isinstance(command[1], str):
+                self.target_y += MOVEMENT_SPEED * self.speed
+            else:
+                self.target_y += MOVEMENT_SPEED * command[1]
+        elif command[0] == "move_down":
+            self.center_y -= MOVEMENT_SPEED * command[1]
+        elif command[0] == "speed":
+            speed = int(command[1])
 
     # Check if the player is out of bounds
     def check_out_of_bounds(self):
@@ -55,6 +64,21 @@ class Turtle(ac.Sprite):
             self.bottom = 0
         elif self.top > arcade.get_window().height - 1:
             self.top = arcade.get_window().height - 1
+
+    def update(self):
+        # Move the dot towards the target position
+        dx = self.target_x - self.center_x
+        dy = self.target_y - self.center_y
+        distance = ((dx ** 2) + (dy ** 2)) ** 0.5
+        if distance > MOVEMENT_SPEED:
+            scale = MOVEMENT_SPEED / distance
+            dx *= scale
+            dy *= scale
+
+        self.center_x += dx
+        self.center_y += dy
+
+
 
 
 class TurtleScreen(arcade.Section):
@@ -75,8 +99,6 @@ class TurtleScreen(arcade.Section):
         self.index_f = 0
 
         # Make the player sprite and lists
-        self.player_list = None
-        self.player_sprite = None
 
         # Make the flag sprite
         self.flag_sprite = None
@@ -85,15 +107,12 @@ class TurtleScreen(arcade.Section):
         self.player_list = arcade.SpriteList()
 
         # Set the sprites for player and flag
-        self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE)
+        self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE, PLAYER_START_X, PLAYER_START_Y)
         self.player_list.append(self.player_sprite)
 
-        self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE)
+        self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE, FLAG_START_X, FLAG_START_Y)
 
         # Position the sprites
-        self.player_sprite.center_x = PLAYER_START_X
-        self.player_sprite.center_y = PLAYER_START_Y
-
         self.flag_sprite.center_x = FLAG_START_X
         self.flag_sprite.center_y = FLAG_START_Y
 
@@ -131,7 +150,7 @@ class TurtleScreen(arcade.Section):
 
     def on_update(self, delta_time: float):
         # Movement and game logic
-        self.player_list.update()
+        arcade.schedule(self.player_list.update(), 1/80)
 
         self.update_animation()
         self.update_flag_animation()
@@ -140,4 +159,5 @@ class TurtleScreen(arcade.Section):
     def on_draw(self):
         # Draw the sprite
         self.player_sprite.draw()
+
         self.flag_sprite.draw()
