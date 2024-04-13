@@ -22,7 +22,6 @@ class Box(arcade.SpriteSolidColor):
         self.section.hold_box = None
         self.change_y = -10
 
-
 class ScreenPart(arcade.Section):
     """
     This represents a part of the View defined by its
@@ -46,6 +45,7 @@ class ScreenPart(arcade.Section):
     def on_update(self, delta_time: float):
         # call on_update on the owned Box
         self.box.on_update(delta_time)
+
 
     def on_draw(self):
         """ Draw this section """
@@ -90,6 +90,13 @@ class ScreenPart(arcade.Section):
         if self.hold_box:
             self.hold_box.release()
 
+class MenuView(arcade.View):
+
+    def __init__(self):
+        super().__init__()
+
+    def on_draw(self):
+        self.clear()
 
 class GameView(arcade.View):
 
@@ -106,6 +113,7 @@ class GameView(arcade.View):
         self.add_section(ScreenPart(self.window.width / 2, 0,
                                     self.window.width / 2, self.window.height,
                                     name='Right'))
+    
 
 
     def on_draw(self):
