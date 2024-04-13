@@ -1,5 +1,6 @@
 import arcade as ac
 import windows as wind
+import level as lvl
 
 def main():
     # create the window
@@ -10,6 +11,9 @@ def main():
 
     # show the view
     window.show_view(view)
+
+    new_lvl = lvl.Level(1)
+    print(new_lvl.get_start_pos)
 
     # run arcade loop
     window.run()
