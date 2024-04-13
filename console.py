@@ -42,15 +42,21 @@ default_style = {
 }
 
 
-class Console(arcade.Section):
+class Console(arcade.View):
     """
     This represents a part of the View defined by its
     boundaries (left, bottom, etc.)
     """
-
     def __init__(self, left: int, bottom: int, width: int, height: int,
                  **kwargs):
-        super().__init__(left, bottom, width, height, **kwargs)
+        super().__init__()
+        self.left = left
+        self.right = left + width
+        self.top = bottom + height
+        self.bottom = bottom
+        self.width = width
+        self.height = height
+
         self.manager = arcade.gui.UIManager()
 
         button_1 = self.create_button("speed")
@@ -146,7 +152,7 @@ class Console(arcade.Section):
 
         arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 2,
                                           self.bottom, arcade.color.APPLE_GREEN)
-        arcade.draw_text(f'You\'re are on the {self.name}', self.left + 30,
+        arcade.draw_text(f'You\'re are on the Right', self.left + 30,
                          self.top - 50, arcade.color.BLACK, 16)
 
         self.manager.draw()
