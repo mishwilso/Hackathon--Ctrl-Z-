@@ -93,6 +93,13 @@ class ScreenPart(arcade.Section):
         if self.hold_box:
             self.hold_box.release()
 
+class MenuView(arcade.View):
+
+    def __init__(self):
+        super().__init__()
+
+    def on_draw(self):
+        self.clear()
 
 class GameView(arcade.View):
 
@@ -106,9 +113,9 @@ class GameView(arcade.View):
                                     self.window.height, name='Left'))
 
         # 2) Second section holds the other half of the screen
-        self.console = c.Console(self.window.width / 2, 0,
-                                 self.window.width / 2, self.window.height,
-                                 name='Right')
+        self.add_section(c.Console(self.window.width / 2, 0,
+                                    self.window.width / 2, self.window.height,
+                                    name='Right'))
 
         print(self.window.width)
         print(self.window.height)
@@ -120,48 +127,4 @@ class GameView(arcade.View):
         # draw a line separating each Section
         arcade.draw_line(self.window.width / 2, 0, self.window.width / 2,
                          self.window.height, arcade.color.BLACK, 1)
-        self.console.on_draw()
 
-
-class Button():
-    """ A modal section that represents a popup that waits for user input """
-
-    def __init__(self, x: int, y: int, width: int, height: int):
-        super().__init__(x, y, width, height, modal=True, enabled=False)
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.enabled = False
-
-        # modal button
-        self.button = arcade.SpriteSolidColor(100, 50, arcade.color.RED)
-        pos = self.left + self.width / 2, self.bottom + self.height / 2
-        self.button.position = pos
-
-    def on_draw(self):
-        # draw modal frame and button
-        arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top,
-                                          self.bottom, arcade.color.GRAY)
-        arcade.draw_lrtb_rectangle_outline(self.left, self.right, self.top,
-                                           self.bottom, arcade.color.WHITE)
-        self.draw_button()
-
-    def draw_button(self):
-        # draws the button and button text
-        self.button.draw()
-        arcade.draw_text('Close Modal', self.button.left + 5,
-                         self.button.bottom + self.button.height / 2,
-                         arcade.color.WHITE)
-
-    def on_resize(self, width: int, height: int):
-        """ set position on screen resize """
-        self.left = width // 3
-        self.bottom = (height // 2) - self.height // 2
-        pos = self.left + self.width / 2, self.bottom + self.height / 2
-        self.button.position = pos
-
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        """ Check if the button is pressed """
-        if self.button.collides_with_point((x, y)):
-            self.enabled = False
