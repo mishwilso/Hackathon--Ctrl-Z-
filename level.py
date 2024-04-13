@@ -20,9 +20,3 @@ class Level():
         self.post_code = lvl_data.get("post_code")
         self.buttons = lvl_data.get("buttons")
         self.solve = lvl_data.get("solve")
-
-    def get_start_pos(self):
-        return self.start_pos
-    
-    def get_end_pos(self):
-        return self.end_pos
