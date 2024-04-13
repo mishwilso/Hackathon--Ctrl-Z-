@@ -2,6 +2,8 @@
     "1": {
         "start_square": [0,1],
         "end_square": [5,1],
+        "pre_code": "speed = 5",
+        "post_code": "move_up(speed)",
         "buttons": ["speed","+","8","-","=","move_down","2","1"],
         "solve": ["speed","=","8"]
     }
