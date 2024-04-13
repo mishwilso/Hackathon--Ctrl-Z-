@@ -1,20 +1,3 @@
-"""
-Section Example 1:
-
-In this Section example we divide the screen in two sections and let the user
-pick a box depending on the selected Section
-
-Note:
-    - How View know nothing of what's happening inside the sections.
-      Each section knows what to do.
-    - Each event mouse input is handled by each Section even if the class
-      it's the same (ScreenPart).
-    - How on_mouse_enter/leave triggers in each Section when the mouse
-      enter or leaves the section boundaries
-
-If Python and Arcade are installed, this example can be run from the command line with:
-python -m arcade.examples.sections_demo_1
-"""
 from typing import Optional
 
 import arcade
