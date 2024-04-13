@@ -5,6 +5,12 @@ import arcade as ac
 MOVEMENT_SPEED = 80
 SPRITE_SCALE = 0.75
 
+PLAYER_START_X = 200
+PLAYER_START_Y = 100
+
+FLAG_START_X = 225
+FLAG_START_Y = 500
+
 
 class Turtle(ac.Sprite):
     """
@@ -65,41 +71,59 @@ class TurtleScreen(arcade.Section):
         self.bottom = bottom
         self.top = top
 
+        # self.index = 0
+
         # Make the player sprite and lists
         self.player_list = None
         self.player_sprite = None
 
+        # Make the flag sprite
+        self.flag_sprite = None
+
         # Initialize variables
         self.player_list = arcade.SpriteList()
+
+        # Assign the sprites
         self.player_sprite = Turtle(":resources:images/enemies/wormGreen.png", SPRITE_SCALE)
-
         self.player_list.append(self.player_sprite)
 
-        # TODO: Try and animate :)
-        self.player_sprite = Turtle(":resources:images/enemies/wormGreen_move.png", SPRITE_SCALE)
+        self.flag_sprite = Turtle(":resources:images/items/flagGreen2.png", SPRITE_SCALE)
 
-        self.player_list.append(self.player_sprite)
+        # TODO: Try and animate? :)
+        # self.player_sprite = Turtle(":resources:images/enemies/wormGreen_move.png", SPRITE_SCALE)
+        # self.player_list.append(self.player_sprite)
 
-        # Position the sprite
-        self.player_sprite.center_x = 200
-        self.player_sprite.center_y = 100
+        # Position the sprites
+        self.player_sprite.center_x = PLAYER_START_X
+        self.player_sprite.center_y = PLAYER_START_Y
 
-    def update_animation(self, delta_time: float = 1 / 60):
+        self.flag_sprite.center_x = FLAG_START_X
+        self.flag_sprite.center_y = FLAG_START_Y
+
+    # Doesn't work currently and isn't needed if we run out of time
+    def update_animation(self, index, delta_time: float = 1 / 60):
         # Idle animation
+        self.index += 1
+
         # If it's at the first frame, switch to the second
-        if self.player_sprite == self.player_list[0]:
+        if self.player_sprite == self.player_list[0] and index == 120:
             self.player_sprite = self.player_list[1]
+            self.index -= 120
             return
 
         # If it's at the second frame, switch to the first
-        if self.player_sprite == self.player_list[1]:
+        if self.player_sprite == self.player_list[1] and index == 120:
             self.player_sprite = self.player_list[0]
+            self.index -= 120
             return
 
     def on_update(self, delta_time: float):
         # Movement and game logic
         self.player_list.update()
+        # self.update_animation(self.index)
+        self.on_draw()
 
     def on_draw(self):
         # Draw the sprite
-        self.player_list.draw()
+        self.player_sprite.draw()
+        self.flag_sprite.draw()
