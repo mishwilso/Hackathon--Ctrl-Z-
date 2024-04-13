@@ -17,6 +17,8 @@ class Game():
         """
         if self.parse_code(user_solution) == None:
             return False
+        else: 
+            return self.parse_code(user_solution)
 
     def set_level(self, new_level):
         self.level_num = new_level
@@ -34,7 +36,7 @@ class Game():
         moves.append(self.level_data.parsed_pre_code)
 
         # if the user input is a move command and the next input is an integer
-        if code[0].contains("move"):
+        if code[0][0] == "m":
             if isinstance(code[1],(int)):
                 moves.append(code)
             else:
@@ -48,9 +50,7 @@ class Game():
                     return None
             else:
                 return None
-        
-
-        
+    
         return moves
 
 
