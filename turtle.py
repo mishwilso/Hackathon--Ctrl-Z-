@@ -23,15 +23,23 @@ class Turtle(ac.Sprite):
     def move(self, command_list):
         # Determine the direction the player is moving
         # Then move by the move speed
+        speed = 0
+
         for command in command_list:
+            print(command)
             if command[0] == "move_left":
                 self.center_x -= MOVEMENT_SPEED * command[1]
             elif command[0] == "move_right":
                 self.center_x += MOVEMENT_SPEED * command[1]
             elif command[0] == "move_up":
-                self.center_y += MOVEMENT_SPEED * command[1]
+                if isinstance(command[1], str):
+                    self.center_y += MOVEMENT_SPEED * speed
+                else:
+                    self.center_y += MOVEMENT_SPEED * command[1]
             elif command[0] == "move_down":
                 self.center_y -= MOVEMENT_SPEED * command[1]
+            elif command[0] == "speed":
+                speed = int(command[1])
 
         # Check if out of bounds
         self.check_out_of_bounds()

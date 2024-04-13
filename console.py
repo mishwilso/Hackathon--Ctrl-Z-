@@ -3,6 +3,9 @@ import arcade
 import arcade.gui
 
 import game as g
+import turtle
+
+import turtle as t
 
 import arcade.gui.widgets
 from arcade.experimental.uistyle import UIFlatButtonStyle
@@ -53,6 +56,11 @@ class Console(arcade.View):
     def __init__(self, left: int, bottom: int, width: int, height: int, game: g.Game,
                  **kwargs):
         super().__init__()
+
+        self.turtle = t.TurtleScreen(0, 0, self.window.width / 2,
+                                           self.window.height)
+        self.add_section(self.turtle)
+
         self.left = left
         self.right = left + width
         self.top = bottom + height
@@ -145,7 +153,9 @@ class Console(arcade.View):
 
         @run_button.event("on_click")
         def on_click_switch_button(event):
-            print("RUN THIS!!")
+            moves = game.check_solution(self.user_input)
+            if moves:
+                self.turtle.player_sprite.move(moves)
 
         self.manager.add(grid)
 

@@ -90,9 +90,6 @@ class LevelView(ac.View):
                                   self.window.width / 2, self.window.height,
                                   game)
 
-            view.add_section(t.TurtleScreen(0, 0, self.window.width / 2,
-                                           self.window.height))
-
             self.window.show_view(view)
 
 
