@@ -13,10 +13,10 @@
         "lines": "1",
         "start_pos": [0,2],
         "end_pos": [2,3],
-        "pre_code": ["speed = 3"],
-        "parsed_pre_code": ["speed","3"],
+        "pre_code": ["speed = 1"],
+        "parsed_pre_code": ["speed","1"],
         "post_code": ["move_up(speed)"],
-        "parsed_post_code": ["move_up","1"],
+        "parsed_post_code": ["move_up","speed"],
         "buttons": ["speed","move_right","move_down","move_right","=","6","2","1"]
     }
 }

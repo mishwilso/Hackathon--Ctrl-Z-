@@ -96,7 +96,7 @@ class LevelView(ac.View):
 
         @button_list[1].event("on_click")
         def on_click_switch_button(event):
-            game.set_level(1)
+            game.set_level(2)
             view = console.Console(self.window.width / 2, 0,
                                    self.window.width / 2, self.window.height,
                                    game)
