@@ -1,0 +1,8 @@
+{
+    "1": {
+        "start_square": [0,1],
+        "end_square": [5,1],
+        "buttons": ["speed","+","8","-","=","move_down","2","1"],
+        "solve": ["speed","=","8"]
+    }
+}
