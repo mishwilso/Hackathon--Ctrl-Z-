@@ -136,6 +136,36 @@ class LevelView(ac.View):
                                        height=110,
                                        text=display)
 
+class WinView(ac.View):
+    def __init__(self):
+        super().__init__()
+        self.manager = ac.gui.UIManager()
+
+        self.game_view = None  # Placeholder for the game view instance
+
+        # Create theme object and set theme
+
+    def on_show(self):
+        arcade.set_background_color(arcade.color.APPLE_GREEN)
+
+    def on_draw(self):
+        self.clear()
+        arcade.start_render()
+        self.manager.draw()
+
+    def on_show_view(self):
+        """ Render the screen. """
+        self.manager.enable()
+
+    def on_hide_view(self):
+        # Disable the UIManager when the view is hidden.
+        self.manager.disable()
+
+    def create_button(self, display):
+        return arcade.gui.UIFlatButton(width=110,
+                                       height=110,
+                                       text=display)
+
 
 if __name__ == '__main__':
     main()

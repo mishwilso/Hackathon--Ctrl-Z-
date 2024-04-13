@@ -176,7 +176,7 @@ class Console(arcade.View):
             if self.current_index == self.max_lines - 1:
                 moves = game.check_solution(self.user_input_complete)
                 if moves:
-                    self.turtle.player_sprite.move(moves)
+                    win = self.turtle.player_sprite.move(moves)
                 else:
                     self.reset_code()
             else:
