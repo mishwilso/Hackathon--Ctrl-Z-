@@ -107,8 +107,6 @@ class GameView(arcade.View):
                                     self.window.width / 2, self.window.height,
                                     name='Right'))
 
-        print(self.window.width)
-        print(self.window.height)
 
     def on_draw(self):
         # clear the screen
