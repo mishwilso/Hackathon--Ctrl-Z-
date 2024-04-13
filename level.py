@@ -6,7 +6,6 @@ stores data for a level, including solution, starting positions, and buttons
 import arcade as ac
 import json
 
-
 class Level():
     
     def __init__(self, lvl_num):
