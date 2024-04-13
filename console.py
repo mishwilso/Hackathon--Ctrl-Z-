@@ -61,6 +61,7 @@ class Console(arcade.View):
         self.height = height
         self.code = "HI!!!"
         self.game = game
+        self.combined_code = []
 
         self.start_code = game.get_level_data().pre_code
         self.end_code = game.get_level_data().post_code
@@ -153,19 +154,31 @@ class Console(arcade.View):
         # arcade.start_render()
         self.clear(arcade.color.BEAU_BLUE)
 
+        arcade.draw_lrtb_rectangle_filled(self.left, self.left + 30, self.top,
+                                          self.bottom, arcade.color.LIGHT_GRAY)
 
-
-        arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 2,
+        arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 3,
                                           self.bottom, arcade.color.APPLE_GREEN)
-        arcade.draw_text(f'You\'re are on the Right', self.left + 30,
-                         self.top - 50, arcade.color.BLACK, 16)
+
+
+        lines_offset = self.top * (2/3) // 22 + 10
 
         user_code = ""
         for word in self.user_input:
             user_code += word + " "
 
-        arcade.draw_text(f'{user_code}', self.left + 30,
-                         self.top - 50, arcade.color.WHITE, 16)
+        self.combined_code = []
+        self.combined_code += self.start_code
+        self.combined_code.append(user_code)
+
+        self.combined_code += self.end_code
+
+        for line in range(len(self.combined_code)):
+            arcade.draw_text(f'{self.combined_code[line]}', self.left + 10 ,
+                             self.top - 30 - (line * lines_offset), arcade.color.BLACK, 16)
+
+        #arcade.draw_text(f'{user_code}', self.left + 30,
+                         #self.top - 50, arcade.color.WHITE, 16)
 
         # draw a line separating each Section
         arcade.draw_line(self.window.width / 2, 0, self.window.width / 2,
