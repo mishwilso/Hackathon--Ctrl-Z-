@@ -40,7 +40,7 @@ class Game():
                 # if the user input is a move command and the next input is an integer
                 if line[0][0] == "m":
                     if len(line) >= 2:
-                        if isinstance(line[1], int):
+                        if line[1].isnumeric():
                             moves.append([line[0], line[1]])
                         elif line[1] == "speed":
                             moves.append([line[0], line[1]])

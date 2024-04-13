@@ -30,7 +30,7 @@ class Turtle(ac.Sprite):
         # Determine the direction the player is moving
         # Then move by the move speed
         self.speed = 0
-
+        print(command_list)
         for command in command_list:
             self.move_sqaure(command)
 
