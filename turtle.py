@@ -155,8 +155,11 @@ class TurtleScreen(arcade.Section):
         self.update_flag_animation()
         self.on_draw()
 
+        # Check if the player touches the flag
+        if arcade.check_for_collision(self.player_sprite, self.flag_sprite):
+            print("win!")
+
     def on_draw(self):
         # Draw the sprite
-        self.player_sprite.draw()
-
         self.flag_sprite.draw()
+        self.player_sprite.draw()
