@@ -1,8 +1,27 @@
 from typing import Optional
 
-import console as c
-
 import arcade
+
+class Box(arcade.SpriteSolidColor):
+    """ This is a Solid Sprite that represents a GREEN Box on the screen """
+
+    def __init__(self, section):
+        super().__init__(100, 100, arcade.color.APPLE_GREEN)
+        self.section = section
+
+    def on_update(self, delta_time: float = 1 / 60):
+        # update the box (this actually moves the Box by changing its position)
+        self.update()
+
+        # if we hit the ground then lay on the ground and stop movement
+        if self.bottom <= 0:
+            self.bottom = 0
+            self.stop()
+
+    def release(self):
+        self.section.hold_box = None
+        self.change_y = -10
+
 
 class ScreenPart(arcade.Section):
     """
@@ -84,7 +103,7 @@ class GameView(arcade.View):
                                     self.window.height, name='Left'))
 
         # 2) Second section holds the other half of the screen
-        self.add_section(c.Console(self.window.width / 2, 0,
+        self.add_section(ScreenPart(self.window.width / 2, 0,
                                     self.window.width / 2, self.window.height,
                                     name='Right'))
 
