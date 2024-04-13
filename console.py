@@ -58,7 +58,7 @@ class Console(arcade.View):
         super().__init__()
 
         self.turtle = t.TurtleScreen(0, 0, self.window.width / 2,
-                                           self.window.height)
+                                     self.window.height, game.get_level_data().start_pos, game.get_level_data().end_pos)
         self.add_section(self.turtle)
 
         self.left = left
@@ -70,12 +70,17 @@ class Console(arcade.View):
         self.code = "HI!!!"
         self.game = game
         self.combined_code = []
+        self.current_index = 0
 
         self.start_code = game.get_level_data().pre_code
         self.end_code = game.get_level_data().post_code
         self.button_values = game.get_level_data().buttons
 
+        self.max_lines = int(game.get_level_data().lines)
+
         self.user_input = []
+        self.user_input_complete = ["" for i in range(self.max_lines)]
+        self.user_input_strings = ["" for i in range(self.max_lines)]
 
         self.manager = arcade.gui.UIManager()
 
@@ -100,6 +105,11 @@ class Console(arcade.View):
                                              text="Run",
                                              style=default_style)
 
+        next_button = arcade.gui.UIFlatButton(width=195,
+                                              height=60,
+                                              text="Next",
+                                              style=default_style)
+
         grid = arcade.gui.UIGridLayout(x=left, y=bottom, column_count=4, row_count=3, horizontal_spacing=5,
                                        vertical_spacing=10)
         grid.add(button_1, col_num=0, row_num=0)
@@ -111,7 +121,7 @@ class Console(arcade.View):
         grid.add(button_7, col_num=2, row_num=1)
         grid.add(button_8, col_num=3, row_num=1)
         grid.add(clear_button, col_num=0, row_num=2, col_span=2)
-        grid.add(run_button, col_num=2, row_num=2, col_span=2)
+        grid.add(next_button, col_num=2, row_num=2, col_span=2)
 
         self.selected: bool = False  # if this section is selected
 
@@ -157,6 +167,21 @@ class Console(arcade.View):
             if moves:
                 self.turtle.player_sprite.move(moves)
 
+        @next_button.event("on_click")
+        def on_click_switch_button(event):
+            self.user_input_complete[self.current_index] = self.user_input
+            if self.current_index < self.max_lines - 1:
+                self.current_index += 1
+
+            if self.current_index == self.max_lines - 1:
+                moves = game.check_solution(self.user_input_complete)
+                if moves:
+                    self.turtle.player_sprite.move(moves)
+                else:
+                    self.reset_code()
+            else:
+                self.user_input = []
+
         self.manager.add(grid)
 
     def on_draw(self):
@@ -171,7 +196,7 @@ class Console(arcade.View):
         arcade.draw_lrtb_rectangle_filled(self.left, self.right, self.top // 3,
                                           self.bottom, arcade.color.APPLE_GREEN)
 
-        lines_offset = self.top * (2/3) // 22 + 10
+        lines_offset = self.top * (2 / 3) // 22 + 10
 
         for i in range(14):
             arcade.draw_text(f'{i + 1}', self.left + 10,
@@ -182,9 +207,11 @@ class Console(arcade.View):
         for word in self.user_input:
             user_code += word + " "
 
+        self.user_input_strings[self.current_index] = user_code
+
         self.combined_code = []
         self.combined_code += self.start_code
-        self.combined_code.append(user_code)
+        self.combined_code += self.user_input_strings
 
         self.combined_code += self.end_code
 
@@ -193,8 +220,8 @@ class Console(arcade.View):
                              self.top - 30 - (line * lines_offset) - 4, arcade.color.BLACK, 14,
                              font_name="Kenney Mini Square")
 
-        #arcade.draw_text(f'{user_code}', self.left + 30,
-                         #self.top - 50, arcade.color.WHITE, 16)
+        # arcade.draw_text(f'{user_code}', self.left + 30,
+        # self.top - 50, arcade.color.WHITE, 16)
 
         # draw a line separating each Section
         arcade.draw_line(self.window.width / 2, 0, self.window.width / 2,
@@ -219,3 +246,9 @@ class Console(arcade.View):
     def add_user_input(self, user_Input):
         if len(self.user_input) < 8:
             self.user_input.append(user_Input)
+
+    def reset_code(self):
+        self.user_input = []
+        self.user_input_complete = ["" for i in range(self.max_lines)]
+        self.user_input_strings = ["" for i in range(self.max_lines)]
+        self.current_index = 0

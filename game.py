@@ -35,22 +35,27 @@ class Game():
 
         moves.append(self.level_data.parsed_pre_code)
 
-        for line in code:
-            # if the user input is a move command and the next input is an integer
-            if line[0][0] == "m":
-                if isinstance(line[2], int):
-                    moves.append([line[0], line[2]])
-                else:
-                    return None
+        try:
+            for line in code:
+                # if the user input is a move command and the next input is an integer
+                if line[0][0] == "m":
+                    if len(line) >= 2:
+                        if isinstance(line[1], int):
+                            moves.append([line[0], line[1]])
+                        else:
+                            return None
 
-            elif line[0][0] == "s":
-                if line[1] == "=":
-                    if line[2].isnumeric():
-                        moves.append([line[0], line[2]])
+                elif line[0][0] == "s":
+                    if len(line) >= 3:
+                        if line[1] == "=":
+                            if line[2].isnumeric():
+                                moves.append([line[0], line[2]])
+                            else:
+                                return None
                     else:
                         return None
-                else:
-                    return None
+        except IndexError:
+            return None
 
         moves.append(self.level_data.parsed_post_code)
         print(moves)

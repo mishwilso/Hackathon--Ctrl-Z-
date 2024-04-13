@@ -85,7 +85,7 @@ class TurtleScreen(arcade.Section):
     Show the Turtle
     """
 
-    def __init__(self, left, right, bottom, top):
+    def __init__(self, left, right, bottom, top, start_pos, end_pos):
         # Parent class initializer
         super().__init__(left, right, bottom, top)
         self.left = left
