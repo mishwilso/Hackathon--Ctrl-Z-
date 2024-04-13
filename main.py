@@ -6,9 +6,12 @@ import game as g
 import turtle as t
 
 
+SCREEN_WIDTH = 800
+SCREE_HEIGHT = 640
+
 def main():
     # create the window
-    window = ac.Window(800, 640)
+    window = ac.Window(SCREEN_WIDTH, SCREE_HEIGHT)
 
     # create the custom View. Sections are initialized inside the GameView init
     # view = wind.GameView()
