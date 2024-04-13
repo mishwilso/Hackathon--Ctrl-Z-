@@ -2,6 +2,8 @@ from typing import Optional
 
 import console as c
 
+import turtle as t
+
 import arcade
 
 
@@ -109,8 +111,8 @@ class GameView(arcade.View):
         # add sections to the view
 
         # 1) First section holds half of the screen
-        self.add_section(ScreenPart(0, 0, self.window.width / 2,
-                                    self.window.height, name='Left'))
+        self.add_section(t.TurtleScreen(0, 0, self.window.width / 2,
+                                    self.window.height))
 
         # 2) Second section holds the other half of the screen
         self.add_section(c.Console(self.window.width / 2, 0,
