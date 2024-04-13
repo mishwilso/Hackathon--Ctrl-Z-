@@ -2,10 +2,10 @@
     "1": {
         "start_square": [0,1],
         "end_square": [5,1],
-        "pre_code": ["speed = 5"],
+        "pre_code": ["speed = 3"],
         "parsed_pre_code": ["speed",3],
         "post_code": ["move_up(speed)"],
         "parsed_post_code": ["move_up","speed"],
-        "buttons": ["speed","+","8","-","=","move_down","2","1"]
+        "buttons": ["speed","5","8","7","=","move_down","2","1"]
     }
 }
